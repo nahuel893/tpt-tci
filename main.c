@@ -59,13 +59,13 @@ int main(int argc, char *argv[]) {
 			leeCad(cadena, TAM_MAX);
 			d1=createData(cadena);
 			printf("Nueva estructura: \n");
-			printData(d1);printf("\n");
+			newPrintData(d1, 0);printf("\n");
 			break;
 		case MOSTRAR:
 			CLS
 			if(d1 != NULL){
 				printf("Estructura: \n");
-				printData(d1);
+				newPrintData(d1, 0);
 				printf("\n");
 			}
 			else printf("Aun no se han cargado datos. Por favor seleccione la opcion 1.\n");

@@ -51,7 +51,7 @@ struct dataType* createData(char *s);
 //elimina un dato
 void dataFree(struct dataType** d);
 //imprime un dato por pantalla
-void printData(struct dataType* d);
+void printData(struct dataType* node, short flag);
 
 /*operaciones con SET y LIST*/
 /*Desde lo concpetual no pueden acceder a los elementos de los conjuntos usando
@@ -96,3 +96,4 @@ void muestra_automata( struct dataType * automata );
 int acepta_cadena( struct dataType* automata, char *cadena );  
 struct dataType* afnd2afd( struct dataType* A );
 #endif
+

@@ -472,79 +472,40 @@ struct dataType* createData_old(char *s){
 	}
 	return cab;
 }
-void printData(struct dataType* d){
-	struct dataType* aux;
-	int b = 0;
-	if( d != NULL ){
-		if( d->data == NULL && d->next == NULL ){
-			if( d->nodeType == LIST )
-				printf("Lista vacia,");
-			else
-				printf("%s, ", STR_VACIO);
+// Nuevo printData refactorizado.
+// Utiliza una bandera para saber cuando imprimir { o [ segun el tipo de dato.
+// Es puramente recursivo por lo que se mejoro bastante la lectura y compresion del modulo.
+// El registro de cambios queda en el repositorio de github. Por si se quiere ver los antiguis printData.
+void PrintData(struct dataType *node, short flag){
+	if(node != NULL){
+		if(node->nodeType == STR){// caso base
+			printf("%s", node->dataStr);
 		}
-		// ultima modificacion printData 
-		// caso en el que el dato mandado sea un nodo simple de STR, sin SET's ni LIST's
-		else if( d->nodeType == STR ){
-			printf("%s", d->dataStr);
+		else if(node->nodeType == SET){
+			if(flag == 0)
+				printf("{");
+			PrintData(node->data, 0);
+			if(node->next == NULL)
+				printf("}");
+			else{printf(",");newPrintData(node->next, 1);}
 		}
-		else{
-			if( d->nodeType == SET){
-				printf("{ ");
-				b = SET;
-			}
-			else if( d->nodeType == LIST ){
-				b = LIST;
-				printf("[ ");
-			}
-
-			while( d != NULL ){
-				aux = d->data;
-				if( aux != NULL ){
-					if( aux->nodeType == SET ){
-						printData( aux );
-					}
-					else if ( aux->nodeType == LIST){
-						printData( aux );
-					}
-					else
-						if( d->next == NULL ){
-							printf("%s ", aux->dataStr );
-						}
-						else
-							printf("%s, ", aux->dataStr );
-				}
-				d = d->next;
-			}
-
-			if( b == SET){
-				printf("} ");
-			}
-			else if( b == LIST ){
-				printf("] ");
-			}
+		else if(node->nodeType == LIST){
+			if(flag == 0)
+				printf("[");
+			PrintData(node->data, 0);
+			if(node->next == NULL)
+				printf("]");
+			else{printf(",");newPrintData(node->next, 1);}
 		}
 	}
 }
+
 
 struct dataType* create_STR( char *str ){
 	struct dataType *d;
 	d = create_data_str();
 	strcpy( d->dataStr, str );
 	return d;
-}
-void printData_old(struct dataType* d){
-	if( d->data == NULL ){
-		if( d->nodeType == LIST )
-			printf("Lista vacia\n");
-		else 
-			printf("Conjunto vacio\n");
-	}
-	else{
-		while( d != NULL ){
-			printf("%s\n", d->data->dataStr);
-			d = d->next;
-		}
-	}
 }
 /*Operaciones con SET y LIST */
 int returnType(struct dataType* CL){
