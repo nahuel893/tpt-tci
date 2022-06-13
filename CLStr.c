@@ -476,7 +476,7 @@ struct dataType* createData_old(char *s){
 // Utiliza una bandera para saber cuando imprimir { o [ segun el tipo de dato.
 // Es puramente recursivo por lo que se mejoro bastante la lectura y compresion del modulo.
 // El registro de cambios queda en el repositorio de github. Por si se quiere ver los antiguis printData.
-void PrintData(struct dataType *node, short flag){
+void printData(struct dataType *node, short flag){
 	if(node != NULL){
 		if(node->nodeType == STR){// caso base
 			printf("%s", node->dataStr);
@@ -484,18 +484,18 @@ void PrintData(struct dataType *node, short flag){
 		else if(node->nodeType == SET){
 			if(flag == 0)
 				printf("{");
-			PrintData(node->data, 0);
+			printData(node->data, 0);
 			if(node->next == NULL)
 				printf("}");
-			else{printf(",");newPrintData(node->next, 1);}
+			else{printf(",");printData(node->next, 1);}
 		}
 		else if(node->nodeType == LIST){
 			if(flag == 0)
 				printf("[");
-			PrintData(node->data, 0);
+			printData(node->data, 0);
 			if(node->next == NULL)
 				printf("]");
-			else{printf(",");newPrintData(node->next, 1);}
+			else{printf(",");printData(node->next, 1);}
 		}
 	}
 }
@@ -817,7 +817,7 @@ struct dataType* DIFF( struct dataType* A, struct dataType* B ){
 void muestra_ternasSaltadas( struct dataType *C ){
 	printf("\n");
 	while( C != NULL ){
-		printData( C->data );
+		printData(C->data, 0);
 		printf("\n");
 		C = C->next;
 	}
@@ -827,7 +827,7 @@ void muestra_automata( struct dataType* automata ){
 	for( i = 0; i <= 4; i++ ){
 		printf("%s", vec[i]);
 		if( i != 2 ){
-		printData(automata->data);
+		printData(automata->data, 0);
 		printf("\n");
 		}
 		else

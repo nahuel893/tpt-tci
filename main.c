@@ -59,13 +59,13 @@ int main(int argc, char *argv[]) {
 			leeCad(cadena, TAM_MAX);
 			d1=createData(cadena);
 			printf("Nueva estructura: \n");
-			newPrintData(d1, 0);printf("\n");
+			printData(d1, 0);printf("\n");
 			break;
 		case MOSTRAR:
 			CLS
 			if(d1 != NULL){
 				printf("Estructura: \n");
-				newPrintData(d1, 0);
+				printData(d1, 0);
 				printf("\n");
 			}
 			else printf("Aun no se han cargado datos. Por favor seleccione la opcion 1.\n");
@@ -91,16 +91,16 @@ int main(int argc, char *argv[]) {
 					elem=createData(cad);
 				if (IN(d1,elem)) {
 					printf("\n");
-					printData(elem);
+					printData(elem, 0);
 					printf(" %s ", STR_IN);
-					printData(d1);
+					printData(d1, 0);
 					printf("\n");
 				}
 				else{
 					printf("\n");
-					printData(elem);
+					printData(elem, 0);
 					printf(" %s ", STR_IN_NO);
-					printData(d1);
+					printData(d1, 0);
 					printf("\n");
 				}
 				dataFree(&elem);
@@ -111,14 +111,14 @@ int main(int argc, char *argv[]) {
 		case UNION_:
 			if (returnType(d1)==SET) {
 				printf("Operacion a realizar A %s B\n", STR_UNION);
-				printf("A= ");printData(d1);
+				printf("A= ");printData(d1, 0);
 				printf("\nConjunto B=(Ingrese el conjunto) ");
 				leeCad(cadena, TAM_MAX);
 				d2 = createData(cadena);
 				d3 = UNION(d1,d2);
 				if (d3!=NULL) {
 					printf("A %s B = ", STR_UNION);
-					printData(d3);printf("\n");
+					printData(d3, 0);printf("\n");
 				} else printf("Error\n");
 				dataFree(&d2);
 				dataFree(&d3);
@@ -127,13 +127,13 @@ int main(int argc, char *argv[]) {
 		case INTERSECCION:
 			if (returnType(d1)==SET) {
 				printf("Operacion a realizar A %s B\n", STR_INTER);
-				printf("A= ");printData(d1);
+				printf("A= ");printData(d1, 0);
 				printf("\nConjunto B= ");
 				leeCad(cadena, TAM_MAX);
 				d2=createData(cadena);
 				d3 = INTER(d1,d2);
 				if (d3!=NULL) {
-					printf("A %s B = ", STR_INTER);printData(d3);printf("\n");
+					printf("A %s B = ", STR_INTER);printData(d3, 0);printf("\n");
 				} else printf("Error\n");
 				dataFree(&d2);
 				dataFree(&d3);
@@ -142,13 +142,13 @@ int main(int argc, char *argv[]) {
 		case DIFERENCIA:
 			if (returnType(d1)==SET) {
 				printf("Operacion a realizar A - B\n");
-				printf("A= ");printData(d1);
+				printf("A= ");printData(d1, 0);
 				printf("\nConjunto B= ");
 				leeCad(cadena, TAM_MAX);
 				d2 = createData(cadena);
 				d3 = DIFF(d1,d2);
 				if (d3!=NULL) {
-					printf("A-B = ");printData(d3);printf("\n");
+					printf("A-B = ");printData(d3, 0);printf("\n");
 				} else printf("Error\n");
 				dataFree(&d2);
 				dataFree(&d3);
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]) {
 				}
 				PUSH(d1,elem);
 				printf("Lista modificada: ");
-				printData(d1);
+				printData(d1, 0);
 				printf("\n");
 				// el siguiente dataFree() era bug para las salidas de un lista despues 
 				// de hacer PUSH, ocasionaba salidas extrañas con lugares vacios " , , , "
@@ -179,10 +179,10 @@ int main(int argc, char *argv[]) {
 			if (returnType(d1)==LIST) {
 				elem=POP(&d1);
 				printf("Elemento extraido: ");
-				printData(elem);
+				printData(elem, 0);
 				printf("\n");
 				printf("Lista modificada: ");
-				printData(d1);
+				printData(d1, 0);
 				printf("\n");
 				dataFree(&elem);
 			} else printf("Tipo de estructura incorrecta para esta operacion\n");
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
 		case 11:
 			automata1 = carga_automata();	
 			printf("Automata cargado: \n");
-			printData( automata1 );
+			printData(automata1, 0);
 			printf("\n");
 			break;
 		case 12:
