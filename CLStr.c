@@ -967,7 +967,7 @@ struct dataType* delta_extend( struct dataType* estado, struct dataType* ternas,
 }
 int acepta_cadena( struct dataType *automata, char* cadena ){
 	struct dataType *aux; 
-	if( verifica_cadena( cadena, return_upla(automata, ALFABETO)) == 0 ){
+	if(verifica_cadena( cadena, return_upla(automata, ALFABETO)) == 0){
 		return -1;
 	}
 	aux = delta_extend(return_upla(automata,INICIAL),return_upla(automata,DELTA),cadena,0);

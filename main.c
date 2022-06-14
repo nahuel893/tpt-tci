@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 	struct dataType* automata1 = NULL , *automata2 = NULL ;//se inicializan los punteros en NULL
 	struct dataType* elem;
 	char *cadena;
-	int rta;
+	int rta, b;//bandera
 	cadena = (char*)malloc(sizeof(char)*TAM_MAX);	
 	do{
 		//CLS
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
 		case 11:
 			automata1 = carga_automata();	
 			printf("Automata cargado: \n");
-			printData(automata1, 0);
+			muestra_automata(automata1);
 			printf("\n");
 			break;
 		case 12:
@@ -206,7 +206,6 @@ int main(int argc, char *argv[]) {
 			break;
 		case 13:
 			if( automata1 != NULL ){
-				int b;
 				printf("Ingrese la cadena:");
 				leeCad( cadena, TAM_MAX );
 				b = acepta_cadena( automata1, cadena );
@@ -223,12 +222,10 @@ int main(int argc, char *argv[]) {
 			break;
 		case 14:
 			automata2 = afnd2afd(automata1);	
-			muestra_automata( automata2 );
-			int b;
+			muestra_automata(automata2);
 			printf("Ingrese la cadena:");
-			leeCad( cadena, TAM_MAX );
-			
-			b = acepta_cadena( automata2, cadena );
+			leeCad(cadena, TAM_MAX);
+			b = acepta_cadena(automata2, cadena);
 			if( b == 1 ){
 				printf("La cadena es aceptada por el automata\n");
 			}
