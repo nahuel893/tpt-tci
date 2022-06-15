@@ -583,6 +583,25 @@ struct dataType* POP(struct dataType** L){
 		return elem;
 	}
 	return NULL;
+	// Old code 
+	/* if( aux->data == NULL && aux->next == NULL ){ */
+	/* 	return NULL; */
+	/* } */
+	/* else{ */
+	/* 	if( aux->next != NULL ){ */
+	/* 		while( aux->next != NULL ){ */
+	/* 			aux2 = aux; */
+	/* 			aux = aux->next; */
+	/* 		} */
+	/* 		aux2->next = NULL; */
+	/* 		return aux->data; */
+	/* 	} */
+	/* 	else{ */
+	/* 		aux2 = aux->data; */
+	/* 		aux->data = NULL; */
+	/* 		return aux2; */
+	/* 	} */
+	//}
 }
 int SIZEL(struct dataType* L){
 	int cant = 0;
@@ -867,9 +886,9 @@ struct dataType* carga_automata(){
 	/* leeCad( estados_aceptacion, 1000 ); */
 	/* sprintf(cadena, "[%s,%s,%s,%s,%s]",estados, alfabeto, delta, estado_ini, estados_aceptacion); */
 	// automata pre-cargado, comentar lineas 910 a 922  
-	strcpy(cadena,
+	strcpy( cadena,
 			"[{q0,q1,q2,q3,q4,q5},{0,1},{[q0,0,{q0}],[q0,1,{q0,q1,q2}],[q1,0,{q2,q3}],[q1,1,{}],[q2,0,{}],[q2,1,{q4}],[q3,0,{q5}],[q3,1,{}],[q4,0,{}],[q4,1,{q5}],[q5,0,{q5}],[q5,1,{q5}],[{},0,{}],[{},1,{}]},q0,{q5}]");
-	automata = createData_old(cadena);
+	automata = createData_old( cadena );
 	return automata;
 }
 // retorna un elemento de la upla que contiene a automata
