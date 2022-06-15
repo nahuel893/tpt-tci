@@ -9,8 +9,7 @@
 #define INICIAL  4
 #define ACEPTACION 5
 vec_cadena vec = {
-			"Conjunto de Estados:",
-			"Alfabeto:           ",
+			"Conjunto de Estados:", "Alfabeto:           ",
 			"Funcion Delta:      ",
 			"Estado inicial:     ",
 			"Estados aceptacion: ",
@@ -19,7 +18,6 @@ vec_cadena vec = {
 /* Operaciones generales y privadas */
 void getElem(char**s, char**aux){ 
 	char* s_aux;
-
 	int i=0; 
 	int cont_abre_l=0;
 
@@ -825,7 +823,7 @@ void muestra_ternasSaltadas( struct dataType *C ){
 void muestra_automata( struct dataType* automata ){
 	int i;
 	for( i = 0; i <= 4; i++ ){
-		printf("%s", vec[i]);
+		printf("%s", vec[i]);// contiene las etiquetas o nombres de cada elemento del AF
 		if( i != 2 ){
 		printData(automata->data, 0);
 		printf("\n");
@@ -874,7 +872,6 @@ void leeCad(char cadena[], int tam){
 struct dataType* carga_automata(){
 	struct dataType *automata;
 	char cadena[4200];
-		
 	/* char estados[1000], alfabeto[1000], delta[100], estado_ini[100], estados_aceptacion[1000]; */
 	/* FLUSH */
 	/* printf("Ingrese el conjunto de estados\n"); */
@@ -903,29 +900,35 @@ struct dataType* return_upla( struct dataType *nivel, int elem ){
 	}
 	return nivel->data;
 }
+// verifica si una cadena pertenece a un alfabeto.
 int verifica_cadena( char * cadena, struct dataType* alfabeto ){
-	char caracter[2]; caracter[1] = '\0';
+	// Se utiliza una cadena que sirve para cargarle caracter por caracter de la cadena recibida 
+	char caracter[2]; 
 	int i = 0;
-	struct dataType *str;
+	struct dataType *aux_str_node; // nodo auxiliar
+	// se acomodaron mejor las lineas de este modulo para mejorar su legibilidad.
 
-	while( cadena[i] != '\0' ){//verifica caracteres de la cadena pertenecientes a alfabeto
-		 //pequeño parche, recordar hacer un modulo para convertir la cadena a vector de cadenas
+	// se crea un nodo STR para colocarle el caracter extraido de la cadena.
+	// importante cambio. Solo se crea una sola vez, y no en cada vuelta del ciclo.
+	aux_str_node = create_STR("");
+	caracter[1] = '\0'; 
+	while( cadena[i] != '\0' ){// recorro hasta el fin de cadena.
 		caracter[0] = cadena[i];	
-		str = create_STR( caracter ); 
-		if( IN( alfabeto, str ) == 0){
-			dataFree( &str );
+		strcpy(aux_str_node->dataStr, caracter);
+		if(IN(alfabeto, aux_str_node) == 0){ // luego ese mismo se utiliza para preguntar si pertenece al alfabeto
+			dataFree(&aux_str_node);// si no pertenece se termina la ejecucion del modulo, se elimina el nodo auxiliar
 			return 0;
 		}
-		dataFree( &str );
 		i++;
 	}
+	dataFree(&aux_str_node);//	
 	return 1;
 }
 
 struct dataType* delta( struct dataType *estado, struct dataType* ternas, char* caracter ){
 	struct dataType* q;
 
-	if ( estado != NULL ){
+	if(estado != NULL){
 			// printf("estado:");
 			// printData(estado);
 			// printf("caracter:%s\n",caracter);

@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 	struct dataType* elem;
 	char *cadena;
 	int rta, b;//bandera
-	cadena = (char*)malloc(sizeof(char)*TAM_MAX);	
+	
 	do{
 		//CLS
 		rta = menu();
