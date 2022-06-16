@@ -663,50 +663,34 @@ int es_vacio( struct dataType* C ){
 	}
 	return 0;
 }
-int IN(struct dataType* S, struct dataType* elem){
-	int tipo = elem->nodeType, c = 0;
-	struct dataType *d, *aux;
-	if( S == NULL && elem == NULL )
-		return 1;
-	//while para recorrer el conjunto o nivel correspondiente, a la instancia del modulo
-	while( S != NULL ){
-		//me fijo en el tipo de dato de la izq
-		d = S->data;
-		if( d != NULL ){
-			if(elem->data != NULL){
-				if( d->nodeType == tipo ){
-					if( tipo == STR ){
-						if( strcmp( d->dataStr, elem->dataStr ) == 0 ){
-							return 1;
-						}
-					}
-					else if( tipo == SET  ){
-						aux = elem;
-						c = 0;
-						while( aux != NULL ){
-							if( IN( d, aux->data ) == 1 ){
-								aux = aux->next;
-								c++;
-							}else
-								break;
-						}
-						if( aux == NULL && (CARDINAL(d) == c ) ){
-							return 1;
-						}
-					}
-					else if( tipo == LIST ){
-						return COMPARE_LIST( d, elem );	
-					}
-				}
-			}
-			else if( d->data == NULL && elem->data == NULL )
+int IN(struct dataType *estructura, struct dataType *elemento){
+	if(estructura != NULL && elemento != NULL){// el caso de elemento == NULL podria obviarse
+		if(elemento->nodeType == STR && estructura->data->nodeType == STR){
+			if(strcmp(estructura->data->dataStr, elemento->dataStr) == 0)
 				return 1;
+		}else if(elemento->nodeType == SET && estructura->data->nodeType == SET){
+			if(IN(estructura->data, elemento->data)){
+				elemento = elemento->next;
+				if(elemento != NULL){
+					if(estructura->data->next != NULL)
+						return IN(estructura->data->next, elemento->data); 
+					else
+						return 0;
+				}else if(estructura->data->next != NULL)
+					return 0;
+				else
+					return 1;			
+			}
+		}else if(elemento->nodeType == LIST && estructura->data->nodeType == LIST){
+			if(COMPARE_LIST(elemento, estructura->data)){
+				return 1;	
+			}
 		}
-		S = S->next;
+		return IN(estructura->next, elemento);
 	}
-	/* } */
 	return 0;
 }
+
 // modulos a ubicar
 // Copia struct dataType *a, en un nuevo espacio de memoria y retorna un puntero a ese espacio.
 
